@@ -20,7 +20,7 @@ MicroPythonOS runs on a variety of platforms, from microcontrollers to desktops.
 - [LilyGo T-HMI](https://lilygo.cc/en-us/products/t-hmi): Fully Supported
 - [LilyGo T-Watch S3 Plus](https://lilygo.cc/products/t-watch-s3-plus): Fully Supported
 - [Makerfabs MaTouch ESP32-S3 SPI IPS 2.8" with Camera OV3660](https://www.makerfabs.com/matouch-esp32-s3-spi-ips-2-8-with-camera-ov3660.html): Fully Supported
-- [Seeed SenseCAP Indicator D1/D1S/D1L/D1Pro](https://wiki.seeedstudio.com/Sensor/SenseCAP/SenseCAP_Indicator/Get_started_with_SenseCAP_Indicator/): Partially Supported (display, touch, button and Wi-Fi; the D1L/D1Pro LoRa radio is detected but has no driver yet; the SD card, buzzer and D1S/D1Pro sensors behind the RP2040 are not supported yet). 8 MB flash: build with `./scripts/build_mpos.sh sensecap_indicator`
+- [Seeed SenseCAP Indicator D1/D1S/D1L/D1Pro](https://wiki.seeedstudio.com/Sensor/SenseCAP/SenseCAP_Indicator/Get_started_with_SenseCAP_Indicator/): Supported: display, touch, button, Wi-Fi and, on the D1L/D1Pro, the LoRa radio. The SD card, Grove I2C port (also the D1S/D1Pro sensors) and buzzer sit behind the RP2040 and need the [indicator_rp2040](https://github.com/aXistem-dev/indicator_rp2040) firmware on it. 8 MB flash: build with `./scripts/build_mpos.sh sensecap_indicator`
 - [SQUiXL](https://squixl.io): Fully Supported
 - [Waveshare ESP32-S3-Touch-LCD-2](https://www.waveshare.com/wiki/ESP32-S3-Touch-LCD-2): Fully Supported
 
