@@ -63,6 +63,18 @@ AudioManager.add(
 )
 ```
 
+A buzzer that is not on a GPIO of this chip (one driven through a co-processor, for instance) takes a `buzzer_factory` instead of `buzzer_pin`: a callable that returns a PWM-like object with `freq()`, `duty_u16()` and `deinit()`. The RTTTL player calls it for every tune and drives the object as it would drive a `machine.PWM`; after `deinit()` the object should raise `RuntimeError`, as `machine.PWM` does.
+
+```python
+AudioManager.add(
+    AudioManager.Output(
+        name="Buzzer",
+        kind="buzzer",
+        buzzer_factory=lambda: RemoteBuzzer(link),
+    )
+)
+```
+
 ### Playing WAV Files
 
 ```python
