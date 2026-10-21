@@ -82,7 +82,7 @@ if SDCardManager.is_mounted():
 
 ### Class Methods
 
-#### `init(mode=None, spi_bus=None, cs_pin=None, cmd_pin=None, clk_pin=None, d0_pin=None, d1_pin=None, d2_pin=None, d3_pin=None, slot=1, width=None, freq=20000000)`
+#### `init(mode=None, spi_bus=None, cs_pin=None, cmd_pin=None, clk_pin=None, d0_pin=None, d1_pin=None, d2_pin=None, d3_pin=None, slot=1, width=None, freq=20000000, vfs=None)`
 
 Initialize the SD card hardware. Called once at boot by the board definition. Mode is auto-detected from which pins are provided (SDIO pins → SDIO mode, SPI pins → SPI mode). Can be overridden with the `mode` parameter.
 
@@ -99,6 +99,7 @@ Initialize the SD card hardware. Called once at boot by the board definition. Mo
 - `slot` (int): SDIO slot number (0 or 1). Default: `1`.
 - `width` (int, optional): SDIO bus width (`1` or `4`). Auto-detected from data pins if not provided.
 - `freq` (int): SDIO clock frequency in Hz. Default: `20000000`.
+- `vfs` (object, optional): a ready-made filesystem object for a card this chip does not drive itself, such as one behind a co-processor. It selects the `'vfs'` mode: `mount()` mounts it at `/sdcard` as it is, `is_mounted()` asks its `present()` method (if it has one) whether a card is in the slot, and `format()` calls its `format()` method, which returns `True` on success.
 
 **Example:**
 ```python
@@ -111,6 +112,9 @@ SDCardManager.init(spi_bus=spi, cs_pin=21)
 
 # SDIO 1-bit mode
 SDCardManager.init(cmd_pin=39, clk_pin=40, d0_pin=38, width=1)
+
+# A card behind a co-processor
+SDCardManager.init(vfs=SDCard(link))
 ```
 
 ---
@@ -163,7 +167,7 @@ if mp:
 
 #### `get_mode()`
 
-Get the current mode (`'spi'` or `'sdio'`), or `None` if not initialized.
+Get the current mode (`'spi'`, `'sdio'` or `'vfs'`), or `None` if not initialized.
 
 **Returns:** str or None
 
@@ -177,7 +181,7 @@ print("SD card mode: %s" % mode)
 
 #### `format()`
 
-Format the SD card as FAT32. Unmounts first if already mounted.
+Format the SD card as FAT32. Unmounts first if already mounted. In `'vfs'` mode the filesystem object's `format()` does it.
 
 **Returns:** bool - `True` on success, `False` on failure.
 
